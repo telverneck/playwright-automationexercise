@@ -26,7 +26,8 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html', { open: 'never' }]], // Gera relatório HTML
+  reporter: [['html', { open: 'never' }], ['list'],
+  ['allure-playwright']], // Gera relatório HTML
   use: {
     headless: true,
     baseURL: process.env.BASE_URL,
