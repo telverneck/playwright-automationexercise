@@ -57,3 +57,12 @@ jobs:
         run: |
           zip -r allure-report.zip ./allure-report
           node ./tests/utils/emailReporter.js
+
+      - name: 📤 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
