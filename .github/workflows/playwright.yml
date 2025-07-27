@@ -37,7 +37,7 @@ jobs:
           path: allure-report.zip
 
       - name: Upload Trace
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: traces
           path: test-results/**/trace.zip
