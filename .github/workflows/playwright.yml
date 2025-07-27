@@ -53,11 +53,6 @@ jobs:
           name: traces
           path: playwright-report/**/trace.zip
 
-      - name: Send report by email
-        run: |
-          zip -r allure-report.zip ./allure-report
-          node ./tests/utils/emailReporter.js
-
       - name: 📤 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -66,3 +61,8 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
+
+      - name: Send report by email
+        run: |
+          zip -r allure-report.zip ./allure-report
+          node ./tests/utils/emailReporter.js
