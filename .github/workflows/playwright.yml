@@ -35,10 +35,18 @@ jobs:
         with:
           name: allure-report
           path: allure-report.zip
-      
-      - name: Upload Trace
-      uses: actions/upload-artifact@v3
-      with:
-        name: traces
-        path: test-results/**/trace.zip
 
+      - name: Upload Trace
+        uses: actions/upload-artifact@v3
+        with:
+          name: traces
+          path: test-results/**/trace.zip
+
+      - name: Send report by email
+        run: |
+          zip -r allure-report.zip ./allure-report
+          node -e "require('./tests/utils/emailReporter').sendEmailReport()"
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}

@@ -13,6 +13,7 @@
     "allure-playwright": "^3.3.2"
   },
   "dependencies": {
-    "dotenv": "^17.2.1"
+    "dotenv": "^17.2.1",
+    "nodemailer": "^7.0.5"
   }
 }
