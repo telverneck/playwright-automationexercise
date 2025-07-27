@@ -2,19 +2,25 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { generateRandomEmail } from './utils/helpers';
+import { generateUserData } from './fixture/user';
 
-test('User should be able to login', async ({ page }) => {
-    const home = new HomePage(page);
-    const login = new LoginPage(page);
-    const email = generateRandomEmail();
 
-    await home.goto();
-    await home.clickSignupLogin();
-    await login.isLoaded();
+test.describe('User Signup and Login', () => {
 
-    const randomEmail = email;
+    test('User should be able to login @regression @login', async ({ page }) => {
+        const home = new HomePage(page);
+        const login = new LoginPage(page);
+        const email = generateRandomEmail();
 
-    await login.fillSignupForm('Test User', randomEmail);
+        const user = generateUserData();
+        
+        await home.goto();
+        await home.clickSignupLogin();
+        await login.isLoaded();
+        
+        
+        await login.fillSignupForm(user.name, user.email);
 
-    await expect(page.getByText('Enter Account Information')).toBeVisible();
+        await expect(page.getByText('Enter Account Information')).toBeVisible();
+    })
 });

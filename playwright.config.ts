@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import * as dotenv from 'dotenv';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,6 +11,10 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+dotenv.config({
+  path: `.env.${process.env.ENV || ''}` || '.env'
+});
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -25,9 +29,9 @@ export default defineConfig({
   reporter: [['html', { open: 'never' }]], // Gera relatório HTML
   use: {
     headless: true,
-    baseURL: 'https://www.automationexercise.com',
+    baseURL: process.env.BASE_URL,
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
+    video: 'on'
   },
 
   /* Configure projects for major browsers */
