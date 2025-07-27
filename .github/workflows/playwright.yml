@@ -49,7 +49,7 @@ jobs:
       - name: Send report by email
         run: |
           zip -r allure-report.zip ./allure-report
-          node -e "require('./tests/utils/emailReporter').sendEmailReport()"
+          node ./tests/utils/emailReporter.js
         env:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
