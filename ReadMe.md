@@ -1,8 +1,7 @@
-# 🧪 Playwright Automation - Automation Exercise
 
-End-to-end UI testing automation using [Playwright](https://playwright.dev/) with TypeScript, GitHub Actions CI/CD, Page Object Model, cross-browser execution and mobile testing.
+# 🎭 Playwright Automation Project – automationexercise.com
 
-> Target site: [https://www.automationexercise.com](https://www.automationexercise.com)
+Automated test project using **Playwright** on the website [automationexercise.com](https://www.automationexercise.com), including CI/CD integration, Allure Reports, browser/device matrix, and email notifications.
 
 ---
 
@@ -10,196 +9,140 @@ End-to-end UI testing automation using [Playwright](https://playwright.dev/) wit
 
 ```bash
 .
-├── tests/
-│   ├── pages/          # Page Objects
-│   ├── fixtures/       # Dynamic test data
-│   ├── utils/          # Helpers and tagging utilities
-│   └── *.spec.ts       # Test cases
-├── .github/
-│   └── workflows/      # GitHub Actions CI config
-├── playwright.config.ts
-├── package.json
-├── README.md
-└── .env, .env.staging  # Environment config files
+├── tests/                  # Test specs (organized by feature)
+├── pages/                  # Page Object Model (POM) for screens
+├── utils/                  # Helpers (email, assertions, config, etc.)
+├── test-results/           # Playwright traces
+├── allure-results/         # Raw Allure result files
+├── allure-report/          # Generated Allure report (HTML)
+├── playwright.config.ts    # Global Playwright settings
+├── .github/workflows/      # GitHub Actions CI config
+└── README.md
 ```
 
 ---
 
-## 🚀 Installation
+## 🚀 Getting Started
+
+### 📦 Install dependencies
 
 ```bash
-# Clone the repository
-git clone https://github.com/telverneck/playwright-automationexercise.git
-cd playwright-automationexercise
-
-# Install dependencies
 npm install
 ```
 
----
+### 🧪 Run tests
 
-## 🧪 Test Commands
-
-### ▶️ Run all tests
 ```bash
 npx playwright test
 ```
 
-### 🔬 Run tests with custom tag
+### 🌐 Run tests with environment (optional)
+
 ```bash
-npx playwright test --grep @regression
-```
-
-### 📱 Run on a specific project (browser/device)
-```bash
-npx playwright test --project="Mobile Safari"
-```
-
-### 🧪 Run specific test file
-```bash
-npx playwright test tests/signup.spec.ts
-```
-
-### 🔍 Run tests matching a name
-```bash
-npx playwright test -g "login"
-```
-
----
-
-## 🌐 Environments
-
-Create `.env`, `.env.staging`, etc. with the `BASE_URL` variable.
-
-Example `.env`:
-```env
-BASE_URL=https://www.automationexercise.com
-```
-
-### 🏁 Run with specific environment:
-
-#### PowerShell (Windows):
-```powershell
-$env:ENV="staging"; npx playwright test
-```
-
-#### CMD (Windows):
-```cmd
-set ENV=staging
-npx playwright test
-```
-
-#### Unix/Linux/macOS:
-```bash
+# Run in staging
 ENV=staging npx playwright test
 ```
 
+### 🏷️ Run with tag
+
+```bash
+npx playwright test --grep "@Regression"
+```
+
+> Tags are defined with `test.describe('@TagName', () => { ... })`
+
 ---
 
-## 🧪 Cross-browser and Device Testing
+## 📊 Allure Report
 
-`playwright.config.ts` includes:
+### Generate locally:
 
-- Chrome (Desktop)
-- Firefox
-- Safari (WebKit)
-- iPhone 12
-- Pixel 5
-
-### Run on all:
 ```bash
-npx playwright test
+npx allure generate ./allure-results --clean -o ./allure-report
+npx allure open ./allure-report
+```
+
+> Or serve it locally:
+```bash
+npx serve -s allure-report
+```
+
+### GitHub Pages deployment
+
+Allure is deployed automatically at:
+```
+https://telverneck.github.io/playwright-automationexercise/
 ```
 
 ---
 
-## 🧠 Dynamic Data & Helpers
+## 📧 Email Integration
 
-Use `generateUserData()` to create unique data for each test run:
+When tests run on CI, a summary email with the report link and results is sent using **Nodemailer**.
+
+> Requires SMTP credentials set as GitHub Secrets:
+- `EMAIL_USER`
+- `EMAIL_PASS`
+- `EMAIL_TO`
+
+---
+
+## 📦 Upload Artifacts
+
+Playwright traces are uploaded on failure:
+
+```yaml
+path: test-results/**/trace.zip
+```
+
+Ensure trace collection is enabled:
 
 ```ts
-import { generateUserData } from './fixtures/user';
-
-const user = generateUserData();
-await login.fillSignupForm(user.name, user.email);
-```
-
----
-
-## 🏷️ Tag-based Execution (via `grep`)
-
-Add tags to test titles:
-
-```ts
-test('Should register new user @regression', async () => {
-  // ...
-});
-```
-
-Then run with:
-
-```bash
-npx playwright test --grep @regression
-```
-
----
-
-## ✅ GitHub Actions CI/CD
-
-Includes `.github/workflows/playwright.yml`
-
-- Runs tests on push/pull_request
-- Generates HTML reports
-- Saves screenshots and videos
-
-You can download reports under **Actions > Artifacts**.
-
----
-
-## 📸 Reports and Evidence
-
-### Open report locally:
-```bash
-npx playwright show-report
-```
-
-### CI-generated report:
-Go to **Actions > Latest run > Artifacts > playwright-report.zip**
-
----
-
-## 🔧 Scripts in `package.json` (optional)
-
-```json
-"scripts": {
-  "test": "npx playwright test",
-  "test:staging": "cross-env ENV=staging npx playwright test",
-  "test:regression": "npx playwright test --grep @regression"
+use: {
+  trace: 'on',
 }
 ```
 
 ---
 
-## 🛠 Tech Stack
+## 🔁 Run cross-browser tests
 
-- [Playwright](https://playwright.dev/)
-- TypeScript
-- GitHub Actions
-- Page Object Model
-- Dotenv
-- HTML Reports
-- Mobile/Desktop Testing
+Update `projects` section in `playwright.config.ts`:
+
+```ts
+projects: [
+  { name: 'chromium', use: { ...devices['Desktop Chrome'] }},
+  { name: 'firefox', use: { ...devices['Desktop Firefox'] }},
+  { name: 'webkit', use: { ...devices['Desktop Safari'] }},
+  { name: 'iPhone', use: { ...devices['iPhone 12'] }},
+]
+```
+
+Then run:
+
+```bash
+npx playwright test
+```
 
 ---
 
-## 📌 Suggested Next Steps
+## 🤖 GitHub Actions (CI/CD)
 
-- ✅ Additional flows (login, logout, delete account)
-- ✅ Slack/Telegram integration
-- ✅ Allure or HTML5 interactive reports
-- ✅ Parallel tests by functionality
-- ✅ Database or API integration
+CI workflow runs on:
+- Push to `main`
+- Pull Requests
+
+Includes:
+- Install + test
+- Generate Allure report
+- Upload trace on failure
+- Deploy to GitHub Pages
+- Send email notification
 
 ---
 
-Made with 💻 by [@telverneck](https://github.com/telverneck)
+## ✅ To Do (Next Steps)
+
+- Integrate with Slack
+- Visual regression with Playwright snapshots
+- Dockerized execution (optional)
