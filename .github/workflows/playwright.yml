@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: traces
-          path: test-results/**/trace.zip
+          path: playwright-report/**/trace.zip
 
       - name: Send report by email
         run: |
