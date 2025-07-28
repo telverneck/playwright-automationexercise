@@ -10,7 +10,8 @@
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.1.0",
-    "allure-playwright": "^3.3.2"
+    "allure-playwright": "^3.3.2",
+    "pixelmatch": "^7.1.0"
   },
   "dependencies": {
     "dotenv": "^17.2.1",

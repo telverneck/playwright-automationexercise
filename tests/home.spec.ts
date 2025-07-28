@@ -9,4 +9,5 @@ test('Should load and go to login', async ({ page }) => {
   await homePage.clickSignupLogin();
 
   await expect(page).toHaveURL(/.*\/login/);
+  
 });

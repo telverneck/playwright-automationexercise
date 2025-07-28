@@ -1,4 +1,3 @@
-
 # 🎭 Playwright Automation Project – automationexercise.com
 
 Automated test project using **Playwright** on the website [automationexercise.com](https://www.automationexercise.com), including CI/CD integration, Allure Reports, browser/device matrix, and email notifications.
@@ -63,6 +62,7 @@ npx allure open ./allure-report
 ```
 
 > Or serve it locally:
+
 ```bash
 npx serve -s allure-report
 ```
@@ -70,6 +70,7 @@ npx serve -s allure-report
 ### GitHub Pages deployment
 
 Allure is deployed automatically at:
+
 ```
 https://telverneck.github.io/playwright-automationexercise/
 ```
@@ -81,6 +82,7 @@ https://telverneck.github.io/playwright-automationexercise/
 When tests run on CI, a summary email with the report link and results is sent using **Nodemailer**.
 
 > Requires SMTP credentials set as GitHub Secrets:
+
 - `EMAIL_USER`
 - `EMAIL_PASS`
 - `EMAIL_TO`
@@ -111,11 +113,11 @@ Update `projects` section in `playwright.config.ts`:
 
 ```ts
 projects: [
-  { name: 'chromium', use: { ...devices['Desktop Chrome'] }},
-  { name: 'firefox', use: { ...devices['Desktop Firefox'] }},
-  { name: 'webkit', use: { ...devices['Desktop Safari'] }},
-  { name: 'iPhone', use: { ...devices['iPhone 12'] }},
-]
+  { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+  { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+  { name: "webkit", use: { ...devices["Desktop Safari"] } },
+  { name: "iPhone", use: { ...devices["iPhone 12"] } },
+];
 ```
 
 Then run:
@@ -129,20 +131,21 @@ npx playwright test
 ## 🤖 GitHub Actions (CI/CD)
 
 CI workflow runs on:
-- Push to `main`
+
+- Push to `main` / `master`
 - Pull Requests
 
 Includes:
+
 - Install + test
 - Generate Allure report
 - Upload trace on failure
 - Deploy to GitHub Pages
-- Send email notification
+- Send email notification [WIP]
 
 ---
 
 ## ✅ To Do (Next Steps)
 
-- Integrate with Slack
 - Visual regression with Playwright snapshots
 - Dockerized execution (optional)
