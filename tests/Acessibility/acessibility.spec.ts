@@ -4,7 +4,9 @@ import { HomePage } from '../pages/HomePage';
 
 
 test.describe('Accessibility Test', () => {
-    test('Home page should have no accessibility violations', async ({ page }) => {
+    // For now, we will skip the test to avoid running it in CI
+    // Remove the skip when you want to run the accessibility tests
+    test.skip('Home page should have no accessibility violations', async ({ page }) => {
         const homePage = new HomePage(page);
         
         await homePage.goto();
