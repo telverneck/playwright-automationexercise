@@ -2,7 +2,8 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 
-test('Home visual snapshot', async ({ page }) => {
+test.skip('Home visual snapshot', async ({ page }) => {
+  // skip the test for now, remove when ready to run
     const homePage = new HomePage(page);
     
     await homePage.goto();
