@@ -1,0 +1,1 @@
+C:\automationProjects\2025playwright-automationexercise\tests\visual\home.spec.ts-snapshots\home-webkit-win32.png does not match, writing actual.
