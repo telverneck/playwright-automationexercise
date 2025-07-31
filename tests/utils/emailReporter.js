@@ -1,35 +1,36 @@
-const nodemailer = require("nodemailer");
-const path = require("path");
+import nodemailer from 'nodemailer';
+import fs from 'fs';
 
-async function sendEmailReport() {
+export async function sendEmailReport() {
     const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_SENDER,
-        pass: process.env.EMAIL_PASSWORD,
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_SENDER,
+            pass: process.env.EMAIL_PASSWORD,
         },
     });
 
+    const html = fs.readFileSync('allure-report/index.html', 'utf8');
+
     const mailOptions = {
-        from: process.env.EMAIL_SENDER,
-        to: process.env.EMAIL_RECEIVER,
-        subject: "✅ Playwright Test Report",
-        text: "Attached is the latest Allure report.",
+        from: `"Test Report" <${process.env.EMAIL_SENDER}>`,
+        to: 'recipient@example.com',
+        subject: '📊 Playwright Test Report',
+        html: html,
         attachments: [
-        {
-            filename: "allure-report.zip",
-            path: path.resolve("./allure-report.zip"),
-        },
+            {
+                filename: 'report.html',
+                path: 'allure-report/index.html',
+            },
         ],
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        console.log("📬 Email sent with report!");
+        const info = await transporter.sendMail(mailOptions);
+        console.log('✅ Email sent:', info.response);
     } catch (error) {
-        console.error("❌ Failed to send email:", error);
-        process.exit(1);
+        console.error('❌ Failed to send email:', error);
     }
 }
-
-sendEmailReport();
