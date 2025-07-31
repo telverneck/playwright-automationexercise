@@ -1,19 +1,26 @@
 import nodemailer from 'nodemailer';
-import sgTransport from 'nodemailer-sendgrid-transport';
 import fs from 'fs';
 import path from 'path';
 
-const options = {
-    auth: {
-        api_key: process.env.SENDGRID_API_KEY || '',
-    },
-};
+/**
+ * Sends an email with an attachment using Nodemailer and SMTP.
+ */
+export async function sendEmailWithAttachment(
+    to: string,
+    subject: string,
+    html: string,
+    attachmentPath: string
+) {
+    const transporter = nodemailer.createTransport({
+        service: 'Outlook',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
 
-const transporter = nodemailer.createTransport(sgTransport(options));
-
-export async function sendEmailWithAttachment(to: string, subject: string, html: string, attachmentPath: string) {
     const mailOptions = {
-        from: 'Playwright Bot <telmo.rodrigues.correa@outlook.com>',
+        from: 'Playwright Bot <' + process.env.EMAIL_USER + '>',
         to,
         subject,
         html,
@@ -27,8 +34,8 @@ export async function sendEmailWithAttachment(to: string, subject: string, html:
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log('✅ Email sent:', info);
+        console.log(`✅ Email sent: ${info.response}`);
     } catch (error) {
-        console.error('❌ Failed to send email:', JSON.stringify(error, null, 2));
+        console.error(`❌ Failed to send email: ${error}`);
     }
 }
