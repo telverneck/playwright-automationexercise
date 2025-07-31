@@ -25,6 +25,7 @@ export async function sendEmailReport() {
         const info = await transporter.sendMail(mailOptions);
         console.log('✅ Email sent:', info.response);
     } catch (error) {
-        console.error('❌ Failed to send email:', error);
+        console.error('❌ Failed to send email:', JSON.stringify(error, null, 2));
+
     }
 }
