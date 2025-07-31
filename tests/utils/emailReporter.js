@@ -15,16 +15,10 @@ export async function sendEmailReport() {
     const html = fs.readFileSync('allure-report/index.html', 'utf8');
 
     const mailOptions = {
-        from: `"Test Report" <${process.env.EMAIL_SENDER}>`,
-        to: 'recipient@example.com',
-        subject: '📊 Playwright Test Report',
-        html: html,
-        attachments: [
-            {
-                filename: 'report.html',
-                path: 'allure-report/index.html',
-            },
-        ],
+        from: `"Playwright Reporter" <${process.env.EMAIL_USER}>`,
+        to: 'telverneck@hotmail.com',
+        subject: '📬 Hello from Playwright!',
+        text: 'This is a test email sent from GitHub Actions.',
     };
 
     try {
