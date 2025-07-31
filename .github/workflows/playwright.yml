@@ -62,6 +62,9 @@ jobs:
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
 
+      - name: Compile TypeScript
+        run: npx tsc tests/utils/emailReporter.ts
+
       - name: Send email report
         run: |
           node ./tests/utils/emailReporter.js
