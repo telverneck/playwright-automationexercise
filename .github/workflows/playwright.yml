@@ -62,7 +62,8 @@ jobs:
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
 
-      - name: Send report by email
+      - name: Send email report
         run: |
-          zip -r allure-report.zip ./allure-report
           node ./tests/utils/emailReporter.js
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}

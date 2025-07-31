@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@axe-core/playwright": "^4.10.2",
+    "@sendgrid/mail": "^8.1.5",
     "dotenv": "^17.2.1",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "nodemailer-sendgrid-transport": "^0.2.0"
   }
 }
