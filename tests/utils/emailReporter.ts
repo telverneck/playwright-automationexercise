@@ -11,13 +11,16 @@ export async function sendEmailWithAttachment(
     const transporter = nodemailer.createTransport({
         service: 'Outlook',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
+            user: process.env.EMAIL_SENDER,
+            pass: process.env.EMAIL_PASSWORD,
         },
+        logger: true,
+        debug: true,
     });
 
+
     const mailOptions = {
-        from: 'Playwright Bot <' + process.env.EMAIL_USER + '>',
+        from: 'Playwright Bot <' + process.env.EMAIL_SENDER + '>',
         to,
         subject,
         html,
@@ -30,6 +33,7 @@ export async function sendEmailWithAttachment(
     };
 
     try {
+        console.log('📨 Attempting to send email...');
         const info = await transporter.sendMail(mailOptions);
         console.log(`✅ Email sent: ${info.response}`);
     } catch (error) {
