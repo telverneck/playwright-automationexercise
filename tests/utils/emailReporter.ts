@@ -1,10 +1,7 @@
-import nodemailer from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
+import * as nodemailer from 'nodemailer';
+import * as fs from 'fs';
+import * as path from 'path';
 
-/**
- * Sends an email with an attachment using Nodemailer and SMTP.
- */
 export async function sendEmailWithAttachment(
     to: string,
     subject: string,
@@ -25,10 +22,10 @@ export async function sendEmailWithAttachment(
         subject,
         html,
         attachments: [
-        {
-            filename: path.basename(attachmentPath),
-            content: fs.createReadStream(attachmentPath),
-        },
+            {
+                filename: path.basename(attachmentPath),
+                content: fs.createReadStream(attachmentPath),
+            },
         ],
     };
 
